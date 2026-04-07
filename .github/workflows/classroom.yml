@@ -1,0 +1,150 @@
+name: Autograding Tests
+'on':
+- push
+- repository_dispatch
+permissions:
+  checks: write
+  actions: read
+  contents: read
+jobs:
+  run-autograding-tests:
+    runs-on: ubuntu-latest
+    if: github.actor != 'github-classroom[bot]'
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: P9
+      id: p9
+      uses: classroom-resources/autograding-io-grader@v1
+      with:
+        test-name: P9
+        setup-command: ''
+        command: python examen.py
+        input: '9'
+        expected-output: 'True'
+        comparison-method: contains
+        timeout: 1
+        max-score: 10
+    - name: P2
+      id: p2
+      uses: classroom-resources/autograding-io-grader@v1
+      with:
+        test-name: P2
+        setup-command: ''
+        command: python3 examen.py
+        input: '2'
+        expected-output: prod-88-loteb
+        comparison-method: contains
+        timeout: 1
+        max-score: 9
+    - name: P3
+      id: p3
+      uses: classroom-resources/autograding-io-grader@v1
+      with:
+        test-name: P3
+        setup-command: ''
+        command: python examen.py
+        input: '3'
+        expected-output: 'False'
+        comparison-method: contains
+        timeout: 1
+        max-score: 10
+    - name: P4
+      id: p4
+      uses: classroom-resources/autograding-io-grader@v1
+      with:
+        test-name: P4
+        setup-command: ''
+        command: python3 examen.py
+        input: '4'
+        expected-output: EL EXAMEN TERMINA PRONTO
+        comparison-method: contains
+        timeout: 1
+        max-score: 10
+    - name: P5
+      id: p5
+      uses: classroom-resources/autograding-io-grader@v1
+      with:
+        test-name: P5
+        setup-command: ''
+        command: python examen.py
+        input: '5'
+        expected-output: 150.5 150
+        comparison-method: contains
+        timeout: 1
+        max-score: 10
+    - name: P6
+      id: p6
+      uses: classroom-resources/autograding-io-grader@v1
+      with:
+        test-name: P6
+        setup-command: ''
+        command: python examen.py
+        input: '6'
+        expected-output: '86.0'
+        comparison-method: contains
+        timeout: 1
+        max-score: 10
+    - name: P7
+      id: p7
+      uses: classroom-resources/autograding-io-grader@v1
+      with:
+        test-name: P7
+        setup-command: ''
+        command: python examen.py
+        input: '7'
+        expected-output: Progr
+        comparison-method: contains
+        timeout: 1
+        max-score: 10
+    - name: P8
+      id: p8
+      uses: classroom-resources/autograding-io-grader@v1
+      with:
+        test-name: P8
+        setup-command: ''
+        command: python examen.py
+        input: '8'
+        expected-output: '250.0'
+        comparison-method: contains
+        timeout: 1
+        max-score: 8
+    - name: P1
+      id: p1
+      uses: classroom-resources/autograding-io-grader@v1
+      with:
+        test-name: P1
+        setup-command: ''
+        command: python examen.py
+        input: '1'
+        expected-output: '706.86'
+        comparison-method: contains
+        timeout: 1
+        max-score: 10
+    - name: P10
+      id: p10
+      uses: classroom-resources/autograding-io-grader@v1
+      with:
+        test-name: P10
+        setup-command: ''
+        command: python examen.py
+        input: '10'
+        expected-output: '490.5'
+        comparison-method: contains
+        timeout: 1
+        max-score: 10
+    - name: Autograding Reporter
+      uses: classroom-resources/autograding-grading-reporter@v1
+      env:
+        P9_RESULTS: "${{steps.p9.outputs.result}}"
+        P2_RESULTS: "${{steps.p2.outputs.result}}"
+        P3_RESULTS: "${{steps.p3.outputs.result}}"
+        P4_RESULTS: "${{steps.p4.outputs.result}}"
+        P5_RESULTS: "${{steps.p5.outputs.result}}"
+        P6_RESULTS: "${{steps.p6.outputs.result}}"
+        P7_RESULTS: "${{steps.p7.outputs.result}}"
+        P8_RESULTS: "${{steps.p8.outputs.result}}"
+        P1_RESULTS: "${{steps.p1.outputs.result}}"
+        P10_RESULTS: "${{steps.p10.outputs.result}}"
+      with:
+        runners: p9,p2,p3,p4,p5,p6,p7,p8,p1,p10
